@@ -25,9 +25,34 @@ func _process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node) -> void:
-	print(body)
 	if "Goal" in body.get_groups():
-		print("Winning!")
+		print(get_tree().current_scene)
+		set_process(false)
+		if get_tree().current_scene.name == "Level_4":
+			complete_level()
+		else:
+			var file_path = body.file_path
+			var tween = create_tween()
+			tween.tween_interval(1.0)
+			tween.tween_callback(
+				level_upgrade.bind(file_path)
+			)
+			
 	if "Ground" in body.get_groups():
-		print("jiangjiang")
-	pass # Replace with function body.
+		set_process(false)
+		var tween = create_tween()
+		tween.tween_interval(1.0)
+		tween.tween_callback(crash)
+		
+		
+	pass # Replace with function body.sss
+	
+func crash():
+	get_tree().call_deferred("reload_current_scene")
+	pass
+	
+func complete_level():
+	get_tree().quit()
+	
+func level_upgrade(file_path):
+	get_tree().call_deferred("change_scene_to_file",file_path)
