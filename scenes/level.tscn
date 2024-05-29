@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://bcmdpewmijrvw"]
+[gd_scene load_steps=11 format=3 uid="uid://bcmdpewmijrvw"]
 
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_djmg7"]
 [ext_resource type="PackedScene" uid="uid://n1y78takjrlq" path="res://scenes/player.tscn" id="1_fj2mf"]
 [ext_resource type="Script" path="res://scenes/LandingPad.gd" id="2_h3jau"]
+[ext_resource type="PackedScene" uid="uid://cxecf511y24x5" path="res://scenes/Background.tscn" id="2_xefax"]
+[ext_resource type="PackedScene" uid="uid://vbjjxvc3718a" path="res://scenes/camera.tscn" id="4_uvc8v"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_idjbp"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -17,9 +19,6 @@ background_mode = 2
 sky = SubResource("Sky_yyv41")
 tonemap_mode = 2
 glow_enabled = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yasms"]
-albedo_color = Color(0.51, 0.30277, 0.2397, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_onpw5"]
 albedo_color = Color(0.1312, 0.82, 0.55596, 1)
@@ -38,11 +37,7 @@ transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -
 light_energy = 5.25
 shadow_enabled = true
 
-[node name="Floor" type="CSGBox3D" parent="." groups=["Ground"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
-use_collision = true
-size = Vector3(30, 8, 5)
-material = SubResource("StandardMaterial3D_yasms")
+[node name="Floor" parent="." instance=ExtResource("2_xefax")]
 
 [node name="LaunchPad" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.211, 0.5, 0)
@@ -58,8 +53,7 @@ material = SubResource("StandardMaterial3D_siexb")
 script = ExtResource("2_h3jau")
 file_path = "res://scenes/level_2.tscn"
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.982114, 0.18829, 0, -0.18829, 0.982114, 0, 7.852, 14.144)
+[node name="Camera3D" parent="." instance=ExtResource("4_uvc8v")]
 
 [node name="Player" parent="." instance=ExtResource("1_fj2mf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.211, 2, 0)
